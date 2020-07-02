@@ -1,64 +1,106 @@
 import React from "react";
-
-import GridContainer from "./components/grid/GridContainer.js";
-import GridItem from "./components/grid/GridItem.js";
-import ChartContainer from "./components/grid/ChartContainer.js";
-
 import RechartPieChart from "./components/rechart/RechartPieChart";
 import RechartLineChart from "./components/rechart/RechartLineChart";
 import RechartAreaChart from "./components/rechart/RechartAreaChart";
 import RechartBarChart from "./components/rechart/RechartBarChart";
-
-import dataAreaChart from "./data/RechartAreaData.json";
-import dataBarChart from "./data/RechartBarData.json";
-import dataLineChart from "./data/RechartLineData.json";
-import dataPieChart1 from "./data/RechartPieData1.json";
-import dataPieChart2 from "./data/RechartPieData2.json";
-
-const renderItem = (columnStart, columnEnd, rowStart, rowEnd, chartType) => {
-  return (
-    <GridItem
-      columnStart={columnStart}
-      columnEnd={columnEnd}
-      rowStart={rowStart}
-      rowEnd={rowEnd}
-    >
-      <ChartContainer>
-        <Chart type={chartType} />
-      </ChartContainer>
-    </GridItem>
-  );
-};
+import { connect } from "react-redux";
+import { doGetChartData } from "./redux/GraphDataActions";
+import Grid from "@material-ui/core/Grid";
 
 const Chart = (props) => {
-  switch (props.type) {
-    case "LINECHART": {
-      return <RechartLineChart data={dataLineChart} />;
-    }
-    case "AREACHART": {
-      return <RechartAreaChart data={dataAreaChart} />;
-    }
-    case "BARCHART": {
-      return <RechartBarChart data={dataBarChart} />;
-    }
-    case "PIECHART": {
-      return <RechartPieChart data1={dataPieChart1} data2={dataPieChart2} />;
-    }
-    default: {
-      return "";
+  if (
+    props.type !== "undefined" &&
+    props.type !== null &&
+    props.data !== "undefined" &&
+    props.data !== null
+  ) {
+    switch (props.type) {
+      case "LINECHART": {
+        return (
+          <RechartLineChart
+            data={props.data}
+            width={props.width}
+            height={props.height}
+          />
+        );
+      }
+      case "AREACHART": {
+        return (
+          <RechartAreaChart
+            data={props.data}
+            width={props.width}
+            height={props.height}
+          />
+        );
+      }
+      case "BARCHART": {
+        return (
+          <RechartBarChart
+            data={props.data}
+            width={props.width}
+            height={props.height}
+          />
+        );
+      }
+      case "PIECHART": {
+        return (
+          <RechartPieChart
+            data={props.data}
+            width={props.width}
+            height={props.height}
+          />
+        );
+      }
+      default: {
+        return null;
+      }
     }
   }
 };
 
-const App = (props) => {
-  return (
-    <GridContainer>
-      {renderItem(1, 2, 1, 2, "LINECHART")}
-      {renderItem(2, 3, 1, 2, "AREACHART")}
-      {renderItem(1, 2, 2, 3, "BARCHART")}
-      {renderItem(2, 3, 2, 3, "PIECHART")}
-    </GridContainer>
-  );
+const renderItems = (graphData) => {
+  let items = [];
+
+  if (
+    graphData !== "undefined" &&
+    graphData.chartData !== "undefined" &&
+    graphData.chartData.length > 0
+  ) {
+    graphData.chartData.map((elem, index) => {
+      return items.push(
+        <Grid item xs={12} md={6} key={index}>
+          <Grid container justify="center">
+            <Grid key={index} item>
+              <Chart
+                type={elem.type}
+                data={elem.items}
+                width={elem.width}
+                height={elem.height}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+      );
+    });
+  }
+
+  return items;
 };
 
-export default App;
+const App = ({ graphData, dispatch }) => {
+  React.useEffect(() => {
+    dispatch(doGetChartData());
+  }, [dispatch]);
+
+  return <Grid container>{renderItems(graphData)}</Grid>;
+};
+
+const mapStateToProps = (state) => {
+  const { graphData } = state;
+
+  return {
+    graphData,
+  };
+};
+
+export default connect(mapStateToProps)(App);

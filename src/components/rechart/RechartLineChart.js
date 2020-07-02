@@ -11,7 +11,7 @@ import {
 
 const RechartLineChart = (props) => {
   return (
-    <ResponsiveContainer width="99%" height="99%">
+    <ResponsiveContainer width={props.width} height={props.height}>
       <LineChart data={props.data}>
         <XAxis dataKey="name" />
         <YAxis />

@@ -1,0 +1,44 @@
+{
+  "chartData": [
+    {
+      "items": [
+        {
+          "name": "Tecnología médica",
+          "value": 15
+        },
+        {
+          "name": "Solicitante",
+          "value": 22
+        }
+      ],
+      "type": "PIECHART",
+      "width": 600,
+      "height": 300
+    },
+    {
+      "items": [
+        {
+          "name": "Centro quirurgico",
+          "baja": 4000,
+          "normal": 2400,
+          "urgente": 500
+        },
+        {
+          "name": "Central de bombas",
+          "baja": 3000,
+          "normal": 1398,
+          "urgente": 500
+        },
+        {
+          "name": "Sistemas",
+          "baja": 2000,
+          "normal": 9800,
+          "urgente": 500
+        }
+      ],
+      "type": "BARCHART",
+      "width": 600,
+      "height": 300
+    }
+  ]
+}

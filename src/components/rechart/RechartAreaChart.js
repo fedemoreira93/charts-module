@@ -11,7 +11,7 @@ import {
 
 const RechartAreaChart = (props) => {
   return (
-    <ResponsiveContainer width="99%" height="99%">
+    <ResponsiveContainer width={props.width} height={props.height}>
       <AreaChart data={props.data}>
         <defs>
           <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
