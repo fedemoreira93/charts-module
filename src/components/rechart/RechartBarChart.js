@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  ResponsiveContainer,
   BarChart,
   Bar,
   Legend,
@@ -22,19 +21,55 @@ const renderLegendText = (value, entry) => {
 
 const RechartBarChart = (props) => {
   return (
-    <ResponsiveContainer width={props.width} height={props.height}>
-      <BarChart data={props.data}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend formatter={renderLegendText} />
-        <Bar dataKey="baja" fill="#0088fe" />
-        <Bar dataKey="normal" fill="#00c49f" />
-        <Bar dataKey="urgente" fill="#e83139" />
-      </BarChart>
-    </ResponsiveContainer>
+    <BarChart
+      data={parseData(props.data)}
+      width={props.width}
+      height={props.height}
+    >
+      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis dataKey="name" />
+      <YAxis />
+      <Tooltip />
+      <Legend formatter={renderLegendText} />
+      {getData(props.data)}
+    </BarChart>
   );
+};
+
+const getData = (data) => {
+  let arr = [];
+
+  if (data && data[0].values) {
+    data[0].values.map((elem, index) => {
+      arr.push(<Bar key={index} dataKey={elem.name} fill={elem.color} />);
+
+      return false;
+    });
+  }
+
+  return arr;
+};
+
+const parseData = (data) => {
+  let arr = [];
+
+  data.map((value) => {
+    let obj = {};
+
+    obj.name = value.name;
+
+    value.values.map((val) => {
+      obj[val.name] = val.value;
+
+      return false;
+    });
+
+    arr.push(obj);
+
+    return false;
+  });
+
+  return arr;
 };
 
 export default RechartBarChart;

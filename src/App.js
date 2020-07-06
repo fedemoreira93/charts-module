@@ -6,6 +6,15 @@ import RechartBarChart from "./components/rechart/RechartBarChart";
 import { connect } from "react-redux";
 import { doGetChartData } from "./redux/GraphDataActions";
 import Grid from "@material-ui/core/Grid";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import CardHeader from "@material-ui/core/CardHeader";
+import styled from "styled-components";
+
+const StyledHeader = styled(CardHeader)`
+  padding: 5px;
+  margin: 0;
+`;
 
 const Chart = (props) => {
   if (
@@ -60,7 +69,6 @@ const Chart = (props) => {
 
 const renderItems = (graphData) => {
   let items = [];
-
   if (
     graphData !== "undefined" &&
     graphData.chartData !== "undefined" &&
@@ -68,15 +76,27 @@ const renderItems = (graphData) => {
   ) {
     graphData.chartData.map((elem, index) => {
       return items.push(
-        <Grid item xs={12} md={6} key={index}>
+        <Grid item xs={12} lg={6} key={index}>
           <Grid container justify="center">
             <Grid key={index} item>
-              <Chart
-                type={elem.type}
-                data={elem.items}
-                width={elem.width}
-                height={elem.height}
-              />
+              <Card
+                variant="outlined"
+                style={{ backgroundColor: graphData.backgroundColor }}
+              >
+                <StyledHeader
+                  title={elem.title}
+                  titleTypographyProps={{ variant: "subtitle1" }}
+                  style={{ backgroundColor: graphData.titleBackgroundColor }}
+                ></StyledHeader>
+                <CardContent>
+                  <Chart
+                    type={elem.type}
+                    data={elem.items}
+                    width={elem.width}
+                    height={elem.height}
+                  />
+                </CardContent>
+              </Card>
             </Grid>
           </Grid>
         </Grid>

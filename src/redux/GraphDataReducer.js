@@ -3,6 +3,8 @@ import { CHART_DATA } from "./GraphDataActions";
 
 const initialState = {
   chartData: [],
+  backgroundColor: "#D7D7D9",
+  titleBackgroundColor: "#B4C4D9",
 };
 
 const GraphDataReducer = (state = initialState, action) => {
@@ -13,6 +15,8 @@ const GraphDataReducer = (state = initialState, action) => {
       newState = {
         ...state,
         chartData: action.data.chartData,
+        backgroundColor: action.data.backgroundColor,
+        titleBackgroundColor: action.data.titleBackgroundColor,
       };
 
       return newState;

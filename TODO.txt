@@ -1,0 +1,4 @@
+- Agregar título a cada gráfico.
+- Colores y subtitulos en items de gráficos en el JSON.
+- Definir en el JSON que se obtiene de un ABM y que de un query.
+- Definir que datos se pueden re-aprovechar de la configuración de los portlets y que hay que extender.

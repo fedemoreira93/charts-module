@@ -1,5 +1,5 @@
 import React from "react";
-import { ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recharts";
+import { PieChart, Pie, Cell, Legend } from "recharts";
 
 const RechartPieChart = (props) => {
   const COLORS = ["#0088FE", "#00C49F"];
@@ -32,25 +32,23 @@ const RechartPieChart = (props) => {
   };
 
   return (
-    <ResponsiveContainer width={props.width} height={props.height}>
-      <PieChart>
-        <Pie
-          data={props.data}
-          dataKey="value"
-          nameKey="name"
-          cx="50%"
-          cy="50%"
-          fill="#8884d8"
-          label={renderCustomizedLabel}
-          labelLine={false}
-        >
-          {props.data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
-        <Legend layout="horizontal" align="center" />
-      </PieChart>
-    </ResponsiveContainer>
+    <PieChart width={props.width} height={props.height}>
+      <Pie
+        data={props.data}
+        dataKey="value"
+        nameKey="name"
+        cx="50%"
+        cy="50%"
+        fill="#8884d8"
+        label={renderCustomizedLabel}
+        labelLine={false}
+      >
+        {props.data.map((entry, index) => (
+          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+        ))}
+      </Pie>
+      <Legend layout="horizontal" align="center" />
+    </PieChart>
   );
 };
 
