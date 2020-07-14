@@ -35,10 +35,11 @@ const App = ({ graphData, dispatch }) => {
       }
     }
   };
+
   const renderItems = (graphData) => {
     let items = [];
-    if (graphData && graphData.chartData) {
-      graphData.chartData.forEach((elem, index) => {
+    if (graphData && graphData.data) {
+      graphData.data.forEach((elem, index) => {
         items.push(
           <Grid
             item

@@ -2,7 +2,7 @@ import { CHART_DATA } from "./GraphDataActions";
 // import cloneDeep from "lodash/cloneDeep";
 
 const initialState = {
-  chartData: [],
+  data: [],
   outlined: false,
   columns: 2,
 };
@@ -14,7 +14,7 @@ const GraphDataReducer = (state = initialState, action) => {
     case CHART_DATA:
       newState = {
         ...state,
-        chartData: action.data.chartData,
+        data: action.data.data,
         outlined: action.data.outlined,
         columns: action.data.columns,
       };
