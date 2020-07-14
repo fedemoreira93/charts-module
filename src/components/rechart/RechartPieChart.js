@@ -1,9 +1,7 @@
 import React from "react";
-import { PieChart, Pie, Cell, Legend } from "recharts";
+import { PieChart, Pie, Cell, Legend, ResponsiveContainer } from "recharts";
 
 const RechartPieChart = (props) => {
-  const COLORS = ["#0088FE", "#00C49F"];
-
   const RADIAN = Math.PI / 180;
   const renderCustomizedLabel = ({
     cx,
@@ -32,23 +30,25 @@ const RechartPieChart = (props) => {
   };
 
   return (
-    <PieChart width={props.width} height={props.height}>
-      <Pie
-        data={props.data}
-        dataKey="value"
-        nameKey="name"
-        cx="50%"
-        cy="50%"
-        fill="#8884d8"
-        label={renderCustomizedLabel}
-        labelLine={false}
-      >
-        {props.data.map((entry, index) => (
-          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-        ))}
-      </Pie>
-      <Legend layout="horizontal" align="center" />
-    </PieChart>
+    <ResponsiveContainer width="99%" height={props.height}>
+      <PieChart>
+        <Pie
+          data={props.data}
+          dataKey="value"
+          nameKey="name"
+          cx="50%"
+          cy="50%"
+          fill="#8884d8"
+          label={renderCustomizedLabel}
+          labelLine={false}
+        >
+          {props.data.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={entry.color} />
+          ))}
+        </Pie>
+        <Legend layout="horizontal" align="center" />
+      </PieChart>
+    </ResponsiveContainer>
   );
 };
 

@@ -7,32 +7,21 @@ import {
   YAxis,
   Tooltip,
   CartesianGrid,
+  ResponsiveContainer,
 } from "recharts";
-
-const renderLegendText = (value, entry) => {
-  const { color } = entry;
-
-  return (
-    <span style={{ color }}>
-      {value.charAt(0).toUpperCase() + value.slice(1)}
-    </span>
-  );
-};
 
 const RechartBarChart = (props) => {
   return (
-    <BarChart
-      data={parseData(props.data)}
-      width={props.width}
-      height={props.height}
-    >
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="name" />
-      <YAxis />
-      <Tooltip />
-      <Legend formatter={renderLegendText} />
-      {getData(props.data)}
-    </BarChart>
+    <ResponsiveContainer width="99%" height={props.height}>
+      <BarChart data={parseData(props.data)}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        {getData(props.data)}
+      </BarChart>
+    </ResponsiveContainer>
   );
 };
 
