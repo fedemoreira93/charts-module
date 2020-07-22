@@ -4,7 +4,6 @@ import { CHART_DATA } from "./GraphDataActions";
 const initialState = {
   data: [],
   outlined: false,
-  columns: 2,
 };
 
 const GraphDataReducer = (state = initialState, action) => {
@@ -16,7 +15,6 @@ const GraphDataReducer = (state = initialState, action) => {
         ...state,
         data: action.data.data,
         outlined: action.data.outlined,
-        columns: action.data.columns,
       };
 
       return newState;

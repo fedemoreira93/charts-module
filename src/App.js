@@ -3,6 +3,7 @@ import RechartPieChart from "./components/rechart/RechartPieChart";
 import RechartLineChart from "./components/rechart/RechartLineChart";
 import RechartAreaChart from "./components/rechart/RechartAreaChart";
 import RechartBarChart from "./components/rechart/RechartBarChart";
+import RechartGaugeChart from "./components/rechart/RechartGaugeChart";
 import MaterialTable from "./components/material/MaterialTable";
 import { connect } from "react-redux";
 import { doGetChartData } from "./redux/GraphDataActions";
@@ -26,6 +27,9 @@ const App = ({ graphData, dispatch }) => {
         case "PIECHART": {
           return <RechartPieChart data={props.data} height={props.height} />;
         }
+        case "GAUGECHART": {
+          return <RechartGaugeChart data={props.data} height={props.height} />;
+        }
         case "MATERIAL_TABLE": {
           return <MaterialTable data={props.data} height={props.height} />;
         }
@@ -41,12 +45,7 @@ const App = ({ graphData, dispatch }) => {
     if (graphData && graphData.data) {
       graphData.data.forEach((elem, index) => {
         items.push(
-          <Grid
-            item
-            xs={12}
-            lg={!graphData.columns ? 6 : Math.trunc(12 / graphData.columns)}
-            key={index}
-          >
+          <Grid item xs={12} lg={elem.columns ? elem.columns : 6} key={index}>
             <Box border={graphData.outlined ? 1 : 0}>
               <Box mb="1rem">
                 <Typography variant="subtitle1">{elem.title}</Typography>
@@ -54,7 +53,7 @@ const App = ({ graphData, dispatch }) => {
               <Box mb="1rem">
                 <Chart
                   type={elem.type}
-                  data={elem.items}
+                  data={!elem.json ? elem.items : JSON.parse(elem.json)}
                   width={elem.width}
                   height={elem.height}
                 />

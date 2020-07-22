@@ -1,3 +1,5 @@
+import { graphApi } from "../axios/api";
+
 export const CHART_DATA = "CHART_DATA";
 
 export const getChartData = (data) => {
@@ -9,19 +11,8 @@ export const getChartData = (data) => {
 
 export const doGetChartData = () => {
   return async (dispatch) => {
-    return fetch(`http://127.0.0.1:8888/api/graph/v1/graph-data/`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-        return response;
-      })
-      .then((response) => response.json())
+    return graphApi
+      .get("/graph-data/")
       .then((response) => {
         dispatch(getChartData(response));
       })

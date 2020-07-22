@@ -8,26 +8,29 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
+import PropTypes from "prop-types";
 
 const RechartLineChart = (props) => {
+  RechartLineChart.propTypes = {
+    onSubmit: PropTypes.arrayOf(PropTypes.object),
+  };
+
   return (
     <ResponsiveContainer width={props.width} height={props.height}>
-      <LineChart data={props.data}>
-        <XAxis dataKey="name" />
+      <LineChart data={props.data.data}>
+        <XAxis dataKey={props.data.xdata} />
         <YAxis />
         <CartesianGrid strokeDasharray="3 3" />
         <Tooltip />
-        <Line
-          type="monotone"
-          dataKey="Long Legend Key Number One"
-          stroke="#8884d8"
-          activeDot={{ r: 8 }}
-        />
-        <Line
-          type="monotone"
-          dataKey="Long Legend Key Number Two"
-          stroke="#82ca9d"
-        />
+
+        {props.data.keys.map((key, index) => (
+          <Line
+            type="monotone"
+            dataKey={key}
+            key={index}
+            stroke={props.data.colors[index]}
+          />
+        ))}
       </LineChart>
     </ResponsiveContainer>
   );

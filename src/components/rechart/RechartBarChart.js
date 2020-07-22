@@ -30,7 +30,9 @@ const getData = (data) => {
 
   if (data && data[0].values) {
     data[0].values.map((elem, index) => {
-      arr.push(<Bar key={index} dataKey={elem.name} fill={elem.color} />);
+      arr.push(
+        <Bar stackId="a" key={index} dataKey={elem.name} fill={elem.color} />
+      );
 
       return false;
     });
