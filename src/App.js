@@ -10,8 +10,18 @@ import { doGetChartData } from "./redux/GraphDataActions";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
+import { withStyles } from "@material-ui/core/styles";
 
 const App = ({ graphData, dispatch }) => {
+  const HeaderTitle = withStyles({
+    root: {
+      backgroundColor: "#E7E7E7",
+      padding: "2px",
+      paddingLeft: "4px",
+      borderLeft: "6px outset #8A8FA4",
+    },
+  })(Typography);
+
   const Chart = (props) => {
     if (props.type && props.data) {
       switch (props.type) {
@@ -22,7 +32,13 @@ const App = ({ graphData, dispatch }) => {
           return <RechartAreaChart data={props.data} height={props.height} />;
         }
         case "BARCHART": {
-          return <RechartBarChart data={props.data} height={props.height} />;
+          return (
+            <RechartBarChart
+              data={props.data}
+              height={props.height}
+              stacked={props.stacked}
+            />
+          );
         }
         case "PIECHART": {
           return <RechartPieChart data={props.data} height={props.height} />;
@@ -30,7 +46,7 @@ const App = ({ graphData, dispatch }) => {
         case "GAUGECHART": {
           return <RechartGaugeChart data={props.data} height={props.height} />;
         }
-        case "MATERIAL_TABLE": {
+        case "TABLE": {
           return <MaterialTable data={props.data} height={props.height} />;
         }
         default: {
@@ -46,9 +62,9 @@ const App = ({ graphData, dispatch }) => {
       graphData.data.forEach((elem, index) => {
         items.push(
           <Grid item xs={12} lg={elem.columns ? elem.columns : 6} key={index}>
-            <Box border={graphData.outlined ? 1 : 0}>
+            <Box paddingRight={2}>
               <Box mb="1rem">
-                <Typography variant="subtitle1">{elem.title}</Typography>
+                <HeaderTitle variant="h6">{elem.title}</HeaderTitle>
               </Box>
               <Box mb="1rem">
                 <Chart
@@ -56,6 +72,7 @@ const App = ({ graphData, dispatch }) => {
                   data={!elem.json ? elem.items : JSON.parse(elem.json)}
                   width={elem.width}
                   height={elem.height}
+                  stacked={elem.stacked}
                 />
               </Box>
             </Box>

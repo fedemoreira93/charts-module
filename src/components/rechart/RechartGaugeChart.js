@@ -36,7 +36,7 @@ const GaugeChart = (props) => {
 
   const arrowData = [
     { value: chartValue },
-    { value: 20 },
+    { value: 1 },
     { value: sumValues - chartValue },
   ];
 

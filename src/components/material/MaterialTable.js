@@ -16,15 +16,24 @@ const MaterialTable = (props) => {
 
   const StyledTableCell = withStyles((theme) => ({
     head: {
-      backgroundColor: props.data[0].tableHeaderBackgroundColor,
+      backgroundColor: props.data[0].tableHeaderBackgroundColor
+        ? props.data[0].tableHeaderBackgroundColor
+        : "#FFFFFF",
+      fontSize: "10pt",
     },
     body: {
-      backgroundColor: props.data[0].tableBodyBackgroundColor,
+      backgroundColor: props.data[0].tableBodyBackgroundColor
+        ? props.data[0].tableBodyBackgroundColor
+        : "#FFFFFF",
+      fontSize: "10pt",
+      whiteSpace: "nowrap",
     },
   }))(TableCell);
 
   const StyledTablePagination = styled(TablePagination)((theme) => ({
-    backgroundColor: props.data[0].tableFooterBackgroundColor,
+    backgroundColor: props.data[0].tableFooterBackgroundColor
+      ? props.data[0].tableFooterBackgroundColor
+      : "#FFFFFF",
   }));
 
   const handleChangePage = (event, newPage) => {
@@ -39,16 +48,16 @@ const MaterialTable = (props) => {
   return (
     <Paper>
       <TableContainer style={{ maxHeight: props.height }}>
-        <Table stickyHeader size="small" style={{ backgroudColor: "red" }}>
+        <Table stickyHeader size="small">
           <TableHead>
             <TableRow>
               {props.data[0].columns.map((elem, index) => {
                 return (
                   <StyledTableCell
                     key={index}
-                    align={elem.align ? elem.align : "left"}
+                    align={elem && elem.align ? elem.align : "left"}
                   >
-                    <b>{elem.name}</b>
+                    <b>{elem && elem.name ? elem.name : ""}</b>
                   </StyledTableCell>
                 );
               })}
@@ -58,24 +67,24 @@ const MaterialTable = (props) => {
             {props.data[0].values
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((arr, index) => {
-                return (
+                return arr ? (
                   <TableRow key={index}>
                     {arr.map((elem, index) => (
                       <StyledTableCell
                         key={index}
-                        align={elem.align ? elem.align : "left"}
+                        align={elem && elem.align ? elem.align : "left"}
                       >
-                        {elem.value}
+                        {elem && elem.value ? elem.value : ""}
                       </StyledTableCell>
                     ))}
                   </TableRow>
-                );
+                ) : null;
               })}
           </TableBody>
         </Table>
       </TableContainer>
       <StyledTablePagination
-        rowsPerPageOptions={[10, 25, 100]}
+        rowsPerPageOptions={[10, 25, 50]}
         component="div"
         count={props.data[0].values.length}
         rowsPerPage={rowsPerPage}

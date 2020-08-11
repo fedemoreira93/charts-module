@@ -15,23 +15,32 @@ const RechartBarChart = (props) => {
     <ResponsiveContainer width="99%" height={props.height}>
       <BarChart data={parseData(props.data)}>
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
+        <XAxis
+          dataKey="name"
+          height={40}
+          interval="preserveStart"
+          allowDataOverflow={false}
+        />
         <YAxis />
         <Tooltip />
         <Legend />
-        {getData(props.data)}
+        {getData(props)}
       </BarChart>
     </ResponsiveContainer>
   );
 };
 
-const getData = (data) => {
+const getData = ({ data, stacked }) => {
   let arr = [];
 
   if (data && data[0].values) {
     data[0].values.map((elem, index) => {
       arr.push(
-        <Bar stackId="a" key={index} dataKey={elem.name} fill={elem.color} />
+        stacked ? (
+          <Bar stackId="a" key={index} dataKey={elem.name} fill={elem.color} />
+        ) : (
+          <Bar key={index} dataKey={elem.name} fill={elem.color} />
+        )
       );
 
       return false;
